@@ -18,20 +18,12 @@ from sklearn.metrics import (
 from xgboost import XGBClassifier
 
 
-# ============================================================
-# 1. LOAD PREPROCESSED DATA
-# ============================================================
 
 TRAIN_PATH = "train_30features_scaled.csv"
 TEST_PATH = "test_30features_scaled.csv"
 
 train_data = pd.read_csv(TRAIN_PATH)
 test_data = pd.read_csv(TEST_PATH)
-
-
-# ============================================================
-# 2. SEPARATE FEATURES AND TARGET
-# ============================================================
 
 X_train = train_data.drop(columns=["diagnosis"])
 y_train = train_data["diagnosis"]
@@ -49,9 +41,6 @@ print("Testing samples  :", X_test.shape[0])
 print("Number of features:", X_train.shape[1])
 
 
-# ============================================================
-# 3. DEFINE CLASSICAL MODELS
-# ============================================================
 
 models = {
 
@@ -84,10 +73,6 @@ models = {
 }
 
 
-# ============================================================
-# 4. TRAIN AND TEST MODELS
-# ============================================================
-
 results = []
 
 for model_name, model in models.items():
@@ -96,9 +81,6 @@ for model_name, model in models.items():
     print(model_name)
     print("=" * 70)
 
-    # --------------------------------------------------------
-    # TRAIN
-    # --------------------------------------------------------
 
     start_time = time.time()
 
@@ -107,29 +89,17 @@ for model_name, model in models.items():
     training_time = time.time() - start_time
 
 
-    # --------------------------------------------------------
-    # PREDICTION
-    # --------------------------------------------------------
 
     y_pred = model.predict(X_test)
 
     # Probability of malignant class
     y_probability = model.predict_proba(X_test)[:, 1]
 
-
-    # --------------------------------------------------------
-    # CONFUSION MATRIX
-    # --------------------------------------------------------
-
     tn, fp, fn, tp = confusion_matrix(
         y_test,
         y_pred
     ).ravel()
 
-
-    # --------------------------------------------------------
-    # METRICS
-    # --------------------------------------------------------
 
     accuracy = accuracy_score(
         y_test,
@@ -166,9 +136,6 @@ for model_name, model in models.items():
     )
 
 
-    # --------------------------------------------------------
-    # PRINT RESULTS
-    # --------------------------------------------------------
 
     print("\nConfusion Matrix:")
     print(confusion_matrix(y_test, y_pred))
@@ -191,9 +158,6 @@ for model_name, model in models.items():
     print("Training Time:", round(training_time, 4), "seconds")
 
 
-    # --------------------------------------------------------
-    # STORE RESULTS
-    # --------------------------------------------------------
 
     results.append({
         "Model": model_name,
@@ -210,17 +174,9 @@ for model_name, model in models.items():
         "True Positives": tp
     })
 
-
-# ============================================================
-# 5. CREATE COMPARISON TABLE
-# ============================================================
-
 results_df = pd.DataFrame(results)
 
-
-print("\n\n" + "=" * 70)
 print("FINAL MODEL COMPARISON")
-print("=" * 70)
 
 print(
     results_df[
@@ -238,9 +194,6 @@ print(
 )
 
 
-# ============================================================
-# 6. SAVE RESULTS
-# ============================================================
 
 results_df.to_csv(
     "classical_model_results.csv",
@@ -250,10 +203,6 @@ results_df.to_csv(
 print("\nResults saved to:")
 print("classical_model_results.csv")
 
-
-# ============================================================
-# 7. IDENTIFY BEST MODELS
-# ============================================================
 
 best_accuracy = results_df.loc[
     results_df["Accuracy"].idxmax()

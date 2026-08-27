@@ -3,10 +3,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 
-# ============================================================
-# 1. LOAD DATASET
-# ============================================================
-
 DATA_PATH = "data/wdbc.data"
 
 df = pd.read_csv(
@@ -15,9 +11,6 @@ df = pd.read_csv(
 )
 
 
-# ============================================================
-# 2. ADD COLUMN NAMES
-# ============================================================
 
 features = [
     "radius_mean",
@@ -59,10 +52,6 @@ columns = ["id", "diagnosis"] + features
 df.columns = columns
 
 
-# ============================================================
-# 3. BASIC DATA INSPECTION
-# ============================================================
-
 print("=" * 60)
 print("DATASET INFORMATION")
 print("=" * 60)
@@ -86,19 +75,8 @@ print("\nDiagnosis distribution:")
 print(df["diagnosis"].value_counts())
 
 
-# ============================================================
-# 4. REMOVE ID COLUMN
-# ============================================================
-
-# The ID is only an identifier and should not be used
-# as a machine-learning feature.
-
 df = df.drop(columns=["id"])
 
-
-# ============================================================
-# 5. ENCODE DIAGNOSIS
-# ============================================================
 
 # B = Benign = 0
 # M = Malignant = 1
@@ -114,24 +92,12 @@ print("\nEncoded diagnosis distribution:")
 print(df["diagnosis"].value_counts())
 
 
-# ============================================================
-# 6. SEPARATE FEATURES (X) AND TARGET (y)
-# ============================================================
-
 X = df.drop(columns=["diagnosis"])
 y = df["diagnosis"]
 
 print("\nFeatures shape:", X.shape)
 print("Target shape:", y.shape)
 
-
-# ============================================================
-# 7. TRAIN / TEST SPLIT
-# ============================================================
-
-# 80% training
-# 20% testing
-#
 # random_state=42 ensures reproducibility.
 # stratify=y preserves the benign/malignant ratio.
 
@@ -143,10 +109,6 @@ X_train, X_test, y_train, y_test = train_test_split(
     stratify=y
 )
 
-
-# ============================================================
-# 8. VERIFY TRAIN / TEST SPLIT
-# ============================================================
 
 print("\n" + "=" * 60)
 print("TRAIN / TEST SPLIT")
@@ -163,10 +125,6 @@ print(y_train.value_counts())
 print("\nTesting class distribution:")
 print(y_test.value_counts())
 
-
-# ============================================================
-# 9. SAVE RAW TRAIN / TEST DATA
-# ============================================================
 
 # These contain the original feature values.
 # They are useful as a clean checkpoint before scaling.
@@ -188,10 +146,6 @@ test_30.to_csv(
 )
 
 
-# ============================================================
-# 10. FEATURE SCALING
-# ============================================================
-
 # StandardScaler transforms each feature so that the
 # training data has approximately:
 #
@@ -209,10 +163,6 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 
-# ============================================================
-# 11. CONVERT SCALED DATA BACK TO DATAFRAMES
-# ============================================================
-
 X_train_scaled = pd.DataFrame(
     X_train_scaled,
     columns=X_train.columns,
@@ -226,10 +176,6 @@ X_test_scaled = pd.DataFrame(
 )
 
 
-# ============================================================
-# 12. VERIFY SCALING
-# ============================================================
-
 print("\n" + "=" * 60)
 print("SCALED DATA")
 print("=" * 60)
@@ -242,11 +188,6 @@ print(X_train_scaled.mean().round(4))
 
 print("\nTraining feature standard deviations (should be close to 1):")
 print(X_train_scaled.std().round(4))
-
-
-# ============================================================
-# 13. SAVE SCALED TRAIN / TEST DATA
-# ============================================================
 
 train_30_scaled = X_train_scaled.copy()
 train_30_scaled["diagnosis"] = y_train
