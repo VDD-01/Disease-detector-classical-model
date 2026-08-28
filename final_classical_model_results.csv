@@ -1,0 +1,2 @@
+Model,Accuracy,Sensitivity,Specificity,Precision,F1 Score,ROC-AUC,Prediction Time (s),True Negatives,False Positives,False Negatives,True Positives
+SVM,0.9736842105263158,0.9285714285714286,1.0,1.0,0.9629629629629629,0.9957010582010581,0.003166675567626953,72,0,3,39
