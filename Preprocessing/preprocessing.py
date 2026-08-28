@@ -78,12 +78,12 @@ print(df["diagnosis"].value_counts())
 df = df.drop(columns=["id"])
 
 
-# B = Benign = 0
-# M = Malignant = 1
+# B = Benign = 1
+# M = Malignant = 0
 
 df["diagnosis"] = df["diagnosis"].map({
-    "B": 0,
-    "M": 1
+    "B": 1,
+    "M": 0
 })
 
 

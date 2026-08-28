@@ -32,9 +32,7 @@ X_test = test_data.drop(columns=["diagnosis"])
 y_test = test_data["diagnosis"]
 
 
-print("=" * 70)
-print("DATASET")
-print("=" * 70)
+print("DATASET: ")
 
 print("Training samples :", X_train.shape[0])
 print("Testing samples  :", X_test.shape[0])
@@ -77,9 +75,8 @@ results = []
 
 for model_name, model in models.items():
 
-    print("\n" + "=" * 70)
-    print(model_name)
-    print("=" * 70)
+   
+    print(f"DATASET: {model_name}")
 
 
     start_time = time.time()
