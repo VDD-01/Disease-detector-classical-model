@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 
-DATA_PATH = "data/wdbc.data"
+DATA_PATH = "../data/wdbc.data"
 
 df = pd.read_csv(
     DATA_PATH,

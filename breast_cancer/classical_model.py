@@ -20,7 +20,7 @@ from xgboost import XGBClassifier
 
 
 TRAIN_PATH = "train_30features_scaled.csv"
-TEST_PATH = "test_30features_scaled.csv"
+TEST_PATH  = "test_30features_scaled.csv"
 
 train_data = pd.read_csv(TRAIN_PATH)
 test_data = pd.read_csv(TEST_PATH)
